@@ -7,7 +7,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConvertedJson;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Getter;
@@ -20,7 +19,7 @@ import org.springframework.data.annotation.Id;
 @ToString
 @NoArgsConstructor
 @DynamoDBTable(tableName = "Camp")
-public class Camp implements Serializable {
+public class Camp {
 
     @Id
     @DynamoDBTypeConvertedJson
