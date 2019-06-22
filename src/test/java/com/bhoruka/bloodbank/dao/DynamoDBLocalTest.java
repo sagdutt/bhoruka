@@ -3,14 +3,16 @@ package com.bhoruka.bloodbank.dao;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.local.embedded.DynamoDBEmbedded;
 import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
+
 import org.junit.Before;
 import org.junit.Test;
 
+// To be used later for integration tests
 public class DynamoDBLocalTest {
 
     @Before
     public void setup() {
-        System.setProperty("sqlite4java.library.path", "native-libs");
+        System.setProperty("sqlite4java.library.path", "target/native-libs");
     }
 
     @Test

@@ -6,7 +6,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BloodbankApplication {
 
-	public static void main(String[] args) {
+	/**
+	 * Method to start the spring boot app.
+	 *
+	 * @param args command line args
+	 */
+	public static void main(final String[] args) {
 		SpringApplication application = new SpringApplication(BloodbankApplication.class);
 		application.run(args);
 	}
