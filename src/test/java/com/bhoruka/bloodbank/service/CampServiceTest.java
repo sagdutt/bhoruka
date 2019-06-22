@@ -1,5 +1,8 @@
 package com.bhoruka.bloodbank.service;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 import com.bhoruka.bloodbank.dao.CampDao;
 
 import org.junit.Before;
@@ -9,9 +12,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CampServiceTest {
@@ -23,7 +23,7 @@ public class CampServiceTest {
     private CampService campService;
 
     @Before
-    public void init() {
+    public void setup() {
         campService = new CampService(campDao);
     }
 
