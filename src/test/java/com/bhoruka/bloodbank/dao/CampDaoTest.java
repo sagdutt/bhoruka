@@ -1,9 +1,11 @@
 package com.bhoruka.bloodbank.dao;
 
 import com.bhoruka.bloodbank.dao.repository.CampRepository;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -18,7 +20,7 @@ public class CampDaoTest {
     private CampDao campDao;
 
     @Before
-    public void init() {
+    public void setup() {
         campDao = new CampDao(campRepository);
     }
 
