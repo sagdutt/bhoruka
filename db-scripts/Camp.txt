@@ -1,0 +1,33 @@
+var params = {
+TableName: 'Camp',
+KeySchema: [ 
+    { 
+        AttributeName: 'id',
+        KeyType: 'HASH',
+    },
+    {
+        AttributeName: 'partnerId',
+        KeyType: 'RANGE'
+    }
+],
+AttributeDefinitions: [ 
+    {
+        AttributeName: 'id',
+        AttributeType: 'S', 
+    },
+    {
+        AttributeName: 'partnerId',
+        AttributeType: 'S', 
+    }
+],
+ProvisionedThroughput: { 
+    ReadCapacityUnits: 2,
+    WriteCapacityUnits: 2,
+},
+};
+
+dynamodb.createTable(params, function(err, data) {
+    if (err) ppJson(err); // an error occurred
+    else ppJson(data); // successful response
+
+});
