@@ -3,11 +3,11 @@ package com.bhoruka.bloodbank.model;
 import java.util.Date;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Value;
 import lombok.experimental.Wither;
 
 @Wither
-@Data
+@Value
 @Builder
 public class CampModel {
 

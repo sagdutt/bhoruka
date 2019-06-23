@@ -5,7 +5,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.bhoruka.bloodbank.TestConstants;
+import com.bhoruka.bloodbank.TestCampConstants;
 import com.bhoruka.bloodbank.dao.entity.Camp;
 import com.bhoruka.bloodbank.dao.repository.CampRepository;
 import com.bhoruka.bloodbank.model.CampModel;
@@ -36,9 +36,9 @@ public class CampDaoTest {
         campDao = new CampDao(campRepository);
 
         campFromRepository = new Camp();
-        campFromRepository.setId(TestConstants.TEST_CAMP_ID);
-        campFromRepository.setPartnerId(TestConstants.TEST_PARTNER_ID);
-        campFromRepository.setDateOfCamp(TestConstants.TEST_DATE);
+        campFromRepository.setId(TestCampConstants.TEST_CAMP_ID);
+        campFromRepository.setPartnerId(TestCampConstants.TEST_PARTNER_ID);
+        campFromRepository.setDateOfCamp(TestCampConstants.TEST_DATE);
         campFromRepository.setExpectedNoOfDonor(200L);
     }
 
@@ -51,37 +51,37 @@ public class CampDaoTest {
     public void createCamp_success() {
         when(campRepository.save(any())).thenReturn(campFromRepository);
 
-        CampModel campModel = campDao.createCamp(TestConstants.CAMP_MODEL_WITHOUT_ID);
+        CampModel campModel = campDao.createCamp(TestCampConstants.CAMP_MODEL_WITHOUT_ID);
 
-        assertThat(campModel, is(TestConstants.VALID_CAMP_MODEL));
+        assertThat(campModel, is(TestCampConstants.VALID_CAMP_MODEL));
     }
 
     @Test
     public void getCamp_exists_returnsCamp() {
         when(campRepository.findById(any())).thenReturn(Optional.of(campFromRepository));
 
-        assertThat(campDao.getCamp(TestConstants.TEST_CAMP_ID), is(Optional.of(TestConstants.VALID_CAMP_MODEL)));
+        assertThat(campDao.getCamp(TestCampConstants.TEST_CAMP_ID), is(Optional.of(TestCampConstants.VALID_CAMP_MODEL)));
     }
 
     @Test
     public void getCamp_doesNotExist_returnsEmpty() {
         when(campRepository.findById(any())).thenReturn(Optional.empty());
 
-        assertThat(campDao.getCamp(TestConstants.TEST_CAMP_ID), is(Optional.empty()));
+        assertThat(campDao.getCamp(TestCampConstants.TEST_CAMP_ID), is(Optional.empty()));
     }
 
     @Test
     public void campExists_validId_returnsTrue() {
         when(campRepository.existsById(any())).thenReturn(Boolean.TRUE);
 
-        assertThat(campDao.campExists(TestConstants.TEST_CAMP_ID), is(Boolean.TRUE));
+        assertThat(campDao.campExists(TestCampConstants.TEST_CAMP_ID), is(Boolean.TRUE));
     }
 
     @Test
     public void campExists_invalidId_returnsFalse() {
         when(campRepository.existsById(any())).thenReturn(Boolean.FALSE);
 
-        assertThat(campDao.campExists(TestConstants.TEST_CAMP_ID), is(Boolean.FALSE));
+        assertThat(campDao.campExists(TestCampConstants.TEST_CAMP_ID), is(Boolean.FALSE));
     }
 
     @Test(expected = NullPointerException.class)

@@ -8,7 +8,7 @@ import java.util.Date;
 
 import org.springframework.http.HttpStatus;
 
-public final class TestConstants {
+public final class TestCampConstants {
 
     public static final Date TEST_DATE = new Date();
 
@@ -16,7 +16,9 @@ public final class TestConstants {
 
     public static final String TEST_PARTNER_ID = "ABC";
 
-    private static final String CAMP_CREATE_SUCCESS_MESSAGE = "Camp created successfully.";
+    public static final String CAMP_CREATE_SUCCESS_MESSAGE = "Camp created successfully.";
+
+    public static final String NULL_CAMP_ID_ERROR_MESSAGE = "Unable to create camp.";
 
     public static final CreateCampRequest CREATE_CAMP_REQUEST = CreateCampRequest.builder()
             .partnerId(TEST_PARTNER_ID)
@@ -28,6 +30,11 @@ public final class TestConstants {
             .status(HttpStatus.OK.value())
             .description(CAMP_CREATE_SUCCESS_MESSAGE)
             .campId(TEST_CAMP_ID)
+            .build();
+
+    public static final CreateCampResponse CREATE_CAMP_NULL_ID_ERROR_RESPONSE = CreateCampResponse.builder()
+            .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+            .errorMessage(NULL_CAMP_ID_ERROR_MESSAGE)
             .build();
 
     public static final CampModel CAMP_MODEL_WITHOUT_ID = CampModel.builder()

@@ -1,5 +1,6 @@
 package com.bhoruka.bloodbank.web;
 
+import com.bhoruka.bloodbank.exception.CampCreationFailedException;
 import com.bhoruka.bloodbank.model.request.CreateCampRequest;
 import com.bhoruka.bloodbank.model.response.CreateCampResponse;
 import com.bhoruka.bloodbank.service.CampService;
@@ -43,13 +44,17 @@ public class CampController {
         log.info("Received create request : {}", createCampRequest);
 
         CreateCampResponse response = null;
-        String campId = campService.createCamp(createCampRequest);
-
-        if (campId != null) {
+        try {
+            String campId = campService.createCamp(createCampRequest);
             response = CreateCampResponse.builder()
                     .campId(campId)
                     .description(CAMP_CREATE_SUCCESS_MESSAGE)
                     .status(HttpStatus.OK.value())
+                    .build();
+        } catch (CampCreationFailedException e) {
+            response = CreateCampResponse.builder()
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .errorMessage(e.getMessage())
                     .build();
         }
         return response;

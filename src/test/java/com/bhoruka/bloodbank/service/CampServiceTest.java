@@ -4,8 +4,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
-import com.bhoruka.bloodbank.TestConstants;
+import com.bhoruka.bloodbank.TestCampConstants;
 import com.bhoruka.bloodbank.dao.CampDao;
+import com.bhoruka.bloodbank.exception.CampCreationFailedException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,9 +38,16 @@ public class CampServiceTest {
 
     @Test
     public void createCamp_success() {
-        when(campDao.createCamp(ArgumentMatchers.any())).thenReturn(TestConstants.VALID_CAMP_MODEL);
+        when(campDao.createCamp(ArgumentMatchers.any())).thenReturn(TestCampConstants.VALID_CAMP_MODEL);
 
-        assertThat(campService.createCamp(TestConstants.CREATE_CAMP_REQUEST), is(TestConstants.TEST_CAMP_ID));
+        assertThat(campService.createCamp(TestCampConstants.CREATE_CAMP_REQUEST), is(TestCampConstants.TEST_CAMP_ID));
+    }
+
+    @Test(expected = CampCreationFailedException.class)
+    public void createCamp_failed_throwsCampCreationFailedException() {
+        when(campDao.createCamp(ArgumentMatchers.any())).thenReturn(TestCampConstants.CAMP_MODEL_WITHOUT_ID);
+
+        campService.createCamp(TestCampConstants.CREATE_CAMP_REQUEST);
     }
 
     @Test(expected = NullPointerException.class)

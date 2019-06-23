@@ -2,11 +2,11 @@ package com.bhoruka.bloodbank.web;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.bhoruka.bloodbank.TestConstants;
+import com.bhoruka.bloodbank.TestCampConstants;
+import com.bhoruka.bloodbank.exception.CampCreationFailedException;
 import com.bhoruka.bloodbank.service.CampService;
 
 import org.junit.Before;
@@ -37,17 +37,18 @@ public class CampControllerTest {
 
     @Test
     public void createCamp_success() {
-        when(campService.createCamp(any())).thenReturn(TestConstants.TEST_CAMP_ID);
+        when(campService.createCamp(any())).thenReturn(TestCampConstants.TEST_CAMP_ID);
 
-        assertThat(campController.createCamp(TestConstants.CREATE_CAMP_REQUEST),
-                is(TestConstants.CREATE_CAMP_RESPONSE));
+        assertThat(campController.createCamp(TestCampConstants.CREATE_CAMP_REQUEST),
+                is(TestCampConstants.CREATE_CAMP_RESPONSE));
     }
 
     @Test
-    public void createCamp_returnsNullValue() {
-        when(campService.createCamp(any())).thenReturn(null);
+    public void createCamp_() {
+        when(campService.createCamp(any()))
+                .thenThrow(new CampCreationFailedException(TestCampConstants.NULL_CAMP_ID_ERROR_MESSAGE));
 
-        assertThat(campController.createCamp(TestConstants.CREATE_CAMP_REQUEST),
-                is(nullValue()));
+        assertThat(campController.createCamp(TestCampConstants.CREATE_CAMP_REQUEST),
+                is(TestCampConstants.CREATE_CAMP_NULL_ID_ERROR_RESPONSE));
     }
 }

@@ -3,9 +3,9 @@ package com.bhoruka.bloodbank.model.request;
 import java.util.Date;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value
 @Builder
 public class CreateCampRequest {
 
