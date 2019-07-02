@@ -3,6 +3,7 @@ package com.bhoruka.bloodbank;
 import com.bhoruka.bloodbank.model.CampModel;
 import com.bhoruka.bloodbank.model.request.CreateCampRequest;
 import com.bhoruka.bloodbank.model.response.CreateCampResponse;
+import com.bhoruka.bloodbank.model.response.Response;
 
 import java.util.Date;
 
@@ -27,12 +28,16 @@ public final class TestCampConstants {
             .build();
 
     public static final CreateCampResponse CREATE_CAMP_RESPONSE = CreateCampResponse.builder()
-            .status(HttpStatus.OK.value())
-            .description(CAMP_CREATE_SUCCESS_MESSAGE)
             .campId(TEST_CAMP_ID)
             .build();
 
-    public static final CreateCampResponse CREATE_CAMP_NULL_ID_ERROR_RESPONSE = CreateCampResponse.builder()
+    public static final Response<CreateCampResponse> CREATE_CAMP_REST_RESPONSE = Response.<CreateCampResponse>builder()
+            .data(CREATE_CAMP_RESPONSE)
+            .status(HttpStatus.OK.value())
+            .description(CAMP_CREATE_SUCCESS_MESSAGE)
+            .build();
+
+    public static final Response<CreateCampResponse> CREATE_CAMP_NULL_ID_ERROR_REST_RESPONSE = Response.<CreateCampResponse>builder()
             .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
             .errorMessage(NULL_CAMP_ID_ERROR_MESSAGE)
             .build();

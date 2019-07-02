@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class CampService {
 
     private static final String NULL_CAMP_ID_ERROR_MESSAGE = "Unable to create camp.";
+
     private static final String NULL_CAMP_GET_ERROR_MESSAGE = "Unable to get camp details."; //Get API by Anubrata
 
     @NonNull
@@ -64,12 +65,12 @@ public class CampService {
      */
     public CampModel getCamp(@NonNull final GetCampRequest getCampRequest) throws GetCampDetailsFailedException {
         //TODO check if campId exists in DB and throw exception if not
-        Optional<CampModel> getCamp = campDao.getCamp(getCampRequest.getId());
+        Optional<CampModel> getCamp = campDao.getCamp(getCampRequest.getCampId());
         if (getCamp.isPresent()) {
             CampModel gotCamp = getCamp.get();
             return gotCamp;
         } else {
-                throw new GetCampDetailsFailedException(NULL_CAMP_GET_ERROR_MESSAGE);
+            throw new GetCampDetailsFailedException(NULL_CAMP_GET_ERROR_MESSAGE);
         }
     }
 }

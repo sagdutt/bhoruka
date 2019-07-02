@@ -60,7 +60,8 @@ public class CampDaoTest {
     public void getCamp_exists_returnsCamp() {
         when(campRepository.findById(any())).thenReturn(Optional.of(campFromRepository));
 
-        assertThat(campDao.getCamp(TestCampConstants.TEST_CAMP_ID), is(Optional.of(TestCampConstants.VALID_CAMP_MODEL)));
+        assertThat(campDao.getCamp(TestCampConstants.TEST_CAMP_ID),
+                is(Optional.of(TestCampConstants.VALID_CAMP_MODEL)));
     }
 
     @Test

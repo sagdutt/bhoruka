@@ -40,15 +40,15 @@ public class CampControllerTest {
         when(campService.createCamp(any())).thenReturn(TestCampConstants.TEST_CAMP_ID);
 
         assertThat(campController.createCamp(TestCampConstants.CREATE_CAMP_REQUEST),
-                is(TestCampConstants.CREATE_CAMP_RESPONSE));
+                is(TestCampConstants.CREATE_CAMP_REST_RESPONSE));
     }
 
     @Test
-    public void createCamp_() {
+    public void createCamp_errorOccurs_returnsErrorResponse() {
         when(campService.createCamp(any()))
                 .thenThrow(new CampCreationFailedException(TestCampConstants.NULL_CAMP_ID_ERROR_MESSAGE));
 
         assertThat(campController.createCamp(TestCampConstants.CREATE_CAMP_REQUEST),
-                is(TestCampConstants.CREATE_CAMP_NULL_ID_ERROR_RESPONSE));
+                is(TestCampConstants.CREATE_CAMP_NULL_ID_ERROR_REST_RESPONSE));
     }
 }

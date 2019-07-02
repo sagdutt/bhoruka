@@ -17,10 +17,4 @@ public class GetCampResponse {
     Long expectedNoOfDonors;
 
     Long actualNoOfDonors;
-
-    Integer status;
-
-    String description;
-
-    String errorMessage;
 }

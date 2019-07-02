@@ -7,9 +7,8 @@ import com.bhoruka.bloodbank.model.request.CreateCampRequest;
 import com.bhoruka.bloodbank.model.request.GetCampRequest;
 import com.bhoruka.bloodbank.model.response.CreateCampResponse;
 import com.bhoruka.bloodbank.model.response.GetCampResponse;
+import com.bhoruka.bloodbank.model.response.Response;
 import com.bhoruka.bloodbank.service.CampService;
-
-import java.util.Date;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CampController {
 
     private static final String CAMP_CREATE_SUCCESS_MESSAGE = "Camp created successfully.";
+
     private static final String CAMP_GET_SUCCESS_MESSAGE = "All values of camp fetch successful";
 
     @NonNull
@@ -48,19 +48,21 @@ public class CampController {
      * @return the response with the newly created camp id
      */
     @PostMapping("/create")
-    public CreateCampResponse createCamp(@RequestBody final CreateCampRequest createCampRequest) {
+    public Response<CreateCampResponse> createCamp(@RequestBody final CreateCampRequest createCampRequest) {
         log.info("Received create request : {}", createCampRequest);
 
-        CreateCampResponse response = null;
+        Response<CreateCampResponse> response = null;
         try {
             String campId = campService.createCamp(createCampRequest);
-            response = CreateCampResponse.builder()
-                    .campId(campId)
+            response = Response.<CreateCampResponse>builder()
+                    .data(CreateCampResponse.builder()
+                            .campId(campId)
+                            .build())
                     .description(CAMP_CREATE_SUCCESS_MESSAGE)
                     .status(HttpStatus.OK.value())
                     .build();
         } catch (CampCreationFailedException e) {
-            response = CreateCampResponse.builder()
+            response = Response.<CreateCampResponse>builder()
                     .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                     .errorMessage(e.getMessage())
                     .build();
@@ -74,34 +76,26 @@ public class CampController {
      * @return the response with the get output values
      */
     @GetMapping("/get")
-    public GetCampResponse getCamp(@RequestBody final GetCampRequest getCampRequest) {
+    public Response<GetCampResponse> getCamp(@RequestBody final GetCampRequest getCampRequest) {
         log.info("Received get request : {}",getCampRequest);
 
-        GetCampResponse response = null;
+        Response<GetCampResponse> response = null;
         try {
             CampModel getCamp = campService.getCamp(getCampRequest);
 
-            String campId = getCamp.getId();
-            Date dateOfCamp = getCamp.getDateOfCamp();
-            Long expectedNoOfDonors = getCamp.getExpectedNoOfDonor();
-            Long actualNoOfDonors = getCamp.getActualNoOfDonor();
-
-            System.out.println(campId);
-            System.out.println(dateOfCamp);
-            System.out.println(expectedNoOfDonors);
-            System.out.println(actualNoOfDonors);
-
-            response = GetCampResponse.builder()
-                    .id(getCamp.getId())
-                    .dateOfCamp(getCamp.getDateOfCamp())
-                    .expectedNoOfDonors(getCamp.getExpectedNoOfDonor())
-                    .actualNoOfDonors(getCamp.getActualNoOfDonor())
+            response = Response.<GetCampResponse>builder()
+                    .data(GetCampResponse.builder()
+                            .id(getCamp.getId())
+                            .partnerId(getCamp.getPartnerId())
+                            .dateOfCamp(getCamp.getDateOfCamp())
+                            .expectedNoOfDonors(getCamp.getExpectedNoOfDonor())
+                            .actualNoOfDonors(getCamp.getActualNoOfDonor())
+                            .build())
                     .description(CAMP_GET_SUCCESS_MESSAGE)
                     .status(HttpStatus.OK.value())
                     .build();
         } catch (GetCampDetailsFailedException e) {
-            response = GetCampResponse.builder()
-                    .id(getCampRequest.getId())
+            response = Response.<GetCampResponse>builder()
                     .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                     .errorMessage(e.getMessage())
                     .build();
