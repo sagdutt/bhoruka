@@ -1,15 +1,22 @@
 package com.bhoruka.bloodbank.web;
 
 import com.bhoruka.bloodbank.exception.CampCreationFailedException;
+import com.bhoruka.bloodbank.exception.GetCampDetailsFailedException;
+import com.bhoruka.bloodbank.model.CampModel;
 import com.bhoruka.bloodbank.model.request.CreateCampRequest;
+import com.bhoruka.bloodbank.model.request.GetCampRequest;
 import com.bhoruka.bloodbank.model.response.CreateCampResponse;
+import com.bhoruka.bloodbank.model.response.GetCampResponse;
 import com.bhoruka.bloodbank.service.CampService;
+
+import java.util.Date;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CampController {
 
     private static final String CAMP_CREATE_SUCCESS_MESSAGE = "Camp created successfully.";
+    private static final String CAMP_GET_SUCCESS_MESSAGE = "All values of camp fetch successful";
 
     @NonNull
     private CampService campService;
@@ -53,6 +61,47 @@ public class CampController {
                     .build();
         } catch (CampCreationFailedException e) {
             response = CreateCampResponse.builder()
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .errorMessage(e.getMessage())
+                    .build();
+        }
+        return response;
+    }
+
+    /**
+     * Controller endpoint for getting data of camp.
+     * @param getCampRequest the incoming get request
+     * @return the response with the get output values
+     */
+    @GetMapping("/get")
+    public GetCampResponse getCamp(@RequestBody final GetCampRequest getCampRequest) {
+        log.info("Received get request : {}",getCampRequest);
+
+        GetCampResponse response = null;
+        try {
+            CampModel getCamp = campService.getCamp(getCampRequest);
+
+            String campId = getCamp.getId();
+            Date dateOfCamp = getCamp.getDateOfCamp();
+            Long expectedNoOfDonors = getCamp.getExpectedNoOfDonor();
+            Long actualNoOfDonors = getCamp.getActualNoOfDonor();
+
+            System.out.println(campId);
+            System.out.println(dateOfCamp);
+            System.out.println(expectedNoOfDonors);
+            System.out.println(actualNoOfDonors);
+
+            response = GetCampResponse.builder()
+                    .id(getCamp.getId())
+                    .dateOfCamp(getCamp.getDateOfCamp())
+                    .expectedNoOfDonors(getCamp.getExpectedNoOfDonor())
+                    .actualNoOfDonors(getCamp.getActualNoOfDonor())
+                    .description(CAMP_GET_SUCCESS_MESSAGE)
+                    .status(HttpStatus.OK.value())
+                    .build();
+        } catch (GetCampDetailsFailedException e) {
+            response = GetCampResponse.builder()
+                    .id(getCampRequest.getId())
                     .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                     .errorMessage(e.getMessage())
                     .build();
