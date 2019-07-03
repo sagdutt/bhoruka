@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import com.bhoruka.bloodbank.TestCampConstants;
 import com.bhoruka.bloodbank.exception.CampCreationFailedException;
+import com.bhoruka.bloodbank.exception.GetCampDetailsFailedException;
 import com.bhoruka.bloodbank.service.CampService;
 
 import org.junit.Before;
@@ -50,5 +51,22 @@ public class CampControllerTest {
 
         assertThat(campController.createCamp(TestCampConstants.CREATE_CAMP_REQUEST),
                 is(TestCampConstants.CREATE_CAMP_NULL_ID_ERROR_REST_RESPONSE));
+    }
+
+    @Test
+    public  void getCamp_success() {
+        when(campService.getCamp(any())).thenReturn(TestCampConstants.VALID_GET_CAMP_MODEL);
+
+        assertThat(campController.getCamp(TestCampConstants.GET_CAMP_REQUEST),
+                is(TestCampConstants.GET_CAMP_REST_RESPONSE));
+    }
+
+    @Test
+    public void getCamp_errorOccurs_returnsErrorResponse() {
+        when(campService.getCamp(any()))
+                .thenThrow(new GetCampDetailsFailedException(TestCampConstants.GET_CAMP_ERROR_MESSAGE));
+
+        assertThat(campController.getCamp(TestCampConstants.GET_CAMP_REQUEST),
+                is(TestCampConstants.GET_CAMP_ERROR_REST_RESPONSE));
     }
 }
