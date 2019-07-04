@@ -61,14 +61,12 @@ public class CampService {
      *
      * @param getCampRequest gets the request to fetch data from Dao
      * @return CampModel object of an existing camp
-     * @throws GetCampDetailsFailedException when id returned from the dao layer is null
+     * @throws GetCampDetailsFailedException when no data is received from the dao layer
      */
     public CampModel getCamp(@NonNull final GetCampRequest getCampRequest) throws GetCampDetailsFailedException {
-        //TODO check if campId exists in DB and throw exception if not
         Optional<CampModel> getCamp = campDao.getCamp(getCampRequest.getCampId());
         if (getCamp.isPresent()) {
-            CampModel gotCamp = getCamp.get();
-            return gotCamp;
+            return getCamp.get();
         } else {
             throw new GetCampDetailsFailedException(NULL_CAMP_GET_ERROR_MESSAGE);
         }

@@ -1,6 +1,6 @@
 package com.bhoruka.bloodbank.exception;
 
-public class    CampCreationFailedException extends RuntimeException {
+public class CampCreationFailedException extends RuntimeException {
 
     /**
      * Thrown when there is a problem while creating a camp in the DB.

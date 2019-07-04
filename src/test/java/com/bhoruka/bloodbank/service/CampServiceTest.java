@@ -9,6 +9,9 @@ import com.bhoruka.bloodbank.dao.CampDao;
 import com.bhoruka.bloodbank.exception.CampCreationFailedException;
 
 import com.bhoruka.bloodbank.exception.GetCampDetailsFailedException;
+
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,7 +69,7 @@ public class CampServiceTest {
 
     @Test(expected = GetCampDetailsFailedException.class)
     public void getCamp_failed_throwsGetCampDetailsFailedException() {
-        when(campDao.getCamp(ArgumentMatchers.any())).thenReturn(TestCampConstants.GET_CAMP_DETAILS_WITHOUT_ID);
+        when(campDao.getCamp(ArgumentMatchers.any())).thenReturn(Optional.empty());
 
         campService.getCamp(TestCampConstants.GET_CAMP_REQUEST);
     }

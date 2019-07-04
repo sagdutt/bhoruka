@@ -96,7 +96,7 @@ public class CampController {
                     .build();
         } catch (GetCampDetailsFailedException e) {
             response = Response.<GetCampResponse>builder()
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .status(HttpStatus.NOT_FOUND.value())
                     .errorMessage(e.getMessage())
                     .build();
         }

@@ -89,18 +89,16 @@ public final class TestCampConstants {
             .build();
 
     public static final Response<GetCampResponse> GET_CAMP_ERROR_REST_RESPONSE = Response.<GetCampResponse>builder()
-            .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+            .status(HttpStatus.NOT_FOUND.value())
             .errorMessage(GET_CAMP_ERROR_MESSAGE)
             .build();
 
     public static final Optional<CampModel> GET_VALID_CAMP_DETAILS = Optional.of(CampModel.builder()
-                                                                                .id(TEST_CAMP_ID)
-                                                                                .actualNoOfDonor(200L)
-                                                                                .dateOfCamp(TEST_DATE)
-                                                                                .expectedNoOfDonor(200L)
-                                                                                .partnerId(TEST_PARTNER_ID)
-                                                                                .build());
+            .id(TEST_CAMP_ID)
+            .actualNoOfDonor(200L)
+            .dateOfCamp(TEST_DATE)
+            .expectedNoOfDonor(200L)
+            .partnerId(TEST_PARTNER_ID)
+            .build());
 
-
-    public static final Optional<CampModel> GET_CAMP_DETAILS_WITHOUT_ID = Optional.empty();
 }
