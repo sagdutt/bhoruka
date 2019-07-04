@@ -5,7 +5,13 @@ import lombok.Value;
 
 @Value
 @Builder
-public class CreateCampResponse {
+public class Response<T> {
 
-    String campId;
+    T data;
+
+    Integer status;
+
+    String description;
+
+    String errorMessage;
 }

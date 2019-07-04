@@ -8,6 +8,10 @@ import com.bhoruka.bloodbank.TestCampConstants;
 import com.bhoruka.bloodbank.dao.CampDao;
 import com.bhoruka.bloodbank.exception.CampCreationFailedException;
 
+import com.bhoruka.bloodbank.exception.GetCampDetailsFailedException;
+
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,5 +57,25 @@ public class CampServiceTest {
     @Test(expected = NullPointerException.class)
     public void createCamp_nullValue_throwsNullPointerException() {
         campService.createCamp(null);
+    }
+
+    @Test
+    public void getCamp_success() {
+        when(campDao.getCamp(ArgumentMatchers.any()))
+                .thenReturn(TestCampConstants.GET_VALID_CAMP_DETAILS);
+
+        assertThat(campService.getCamp(TestCampConstants.GET_CAMP_REQUEST), is(TestCampConstants.VALID_GET_CAMP_MODEL));
+    }
+
+    @Test(expected = GetCampDetailsFailedException.class)
+    public void getCamp_failed_throwsGetCampDetailsFailedException() {
+        when(campDao.getCamp(ArgumentMatchers.any())).thenReturn(Optional.empty());
+
+        campService.getCamp(TestCampConstants.GET_CAMP_REQUEST);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void getCamp_nullValue_throwsNullPointerException() {
+        campService.getCamp(null);
     }
 }

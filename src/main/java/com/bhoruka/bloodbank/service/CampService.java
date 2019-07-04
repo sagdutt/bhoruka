@@ -2,9 +2,12 @@ package com.bhoruka.bloodbank.service;
 
 import com.bhoruka.bloodbank.dao.CampDao;
 import com.bhoruka.bloodbank.exception.CampCreationFailedException;
+import com.bhoruka.bloodbank.exception.GetCampDetailsFailedException;
 import com.bhoruka.bloodbank.model.CampModel;
 import com.bhoruka.bloodbank.model.request.CreateCampRequest;
 
+import com.bhoruka.bloodbank.model.request.GetCampRequest;
+import java.util.Optional;
 import lombok.NonNull;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +19,8 @@ import org.springframework.stereotype.Service;
 public class CampService {
 
     private static final String NULL_CAMP_ID_ERROR_MESSAGE = "Unable to create camp.";
+
+    private static final String NULL_CAMP_GET_ERROR_MESSAGE = "Unable to get camp details."; //Get API by Anubrata
 
     @NonNull
     private CampDao campDao;
@@ -49,5 +54,21 @@ public class CampService {
             throw new CampCreationFailedException(NULL_CAMP_ID_ERROR_MESSAGE);
         }
         return createdCamp.getId();
+    }
+
+    /**
+     * Method to get data of an existing camp.
+     *
+     * @param getCampRequest gets the request to fetch data from Dao
+     * @return CampModel object of an existing camp
+     * @throws GetCampDetailsFailedException when no data is received from the dao layer
+     */
+    public CampModel getCamp(@NonNull final GetCampRequest getCampRequest) throws GetCampDetailsFailedException {
+        Optional<CampModel> getCamp = campDao.getCamp(getCampRequest.getCampId());
+        if (getCamp.isPresent()) {
+            return getCamp.get();
+        } else {
+            throw new GetCampDetailsFailedException(NULL_CAMP_GET_ERROR_MESSAGE);
+        }
     }
 }

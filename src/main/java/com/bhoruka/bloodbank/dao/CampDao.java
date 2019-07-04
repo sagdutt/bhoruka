@@ -1,7 +1,6 @@
 package com.bhoruka.bloodbank.dao;
 
 import com.bhoruka.bloodbank.dao.entity.Camp;
-import com.bhoruka.bloodbank.dao.entity.CampId;
 import com.bhoruka.bloodbank.dao.repository.CampRepository;
 import com.bhoruka.bloodbank.model.CampModel;
 
@@ -36,9 +35,7 @@ public class CampDao {
      * @return true if camp exists, false otherwise
      */
     public Boolean campExists(@NonNull final String campId) {
-        return campRepository.existsById(CampId.builder()
-                .id(campId)
-                .build());
+        return campRepository.existsById(campId);
     }
 
     /**
@@ -47,9 +44,7 @@ public class CampDao {
      * @return Optional containing the CampModel or empty if camp does not exist in the db
      */
     public Optional<CampModel> getCamp(@NonNull final String campId) {
-        Optional<Camp> campOptional = campRepository.findById(CampId.builder()
-                .id(campId)
-                .build());
+        Optional<Camp> campOptional = campRepository.findById(campId);
 
         if (!campOptional.isPresent()) {
             log.info("Unable to find camp with id : {}", campId);
