@@ -221,5 +221,6 @@
         </module>
         <module name="CommentsIndentation"/>
         <module name="FinalParameters"/>
+        <module name="UnusedImports"/>
     </module>
 </module>
