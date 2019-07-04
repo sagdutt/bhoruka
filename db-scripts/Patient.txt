@@ -1,0 +1,25 @@
+var params = {
+TableName: 'Patient',
+KeySchema: [
+    {
+        AttributeName: 'id',
+        KeyType: 'HASH',
+    }
+],
+AttributeDefinitions: [
+    {
+        AttributeName: 'id',
+        AttributeType: 'S',
+    }
+],
+ProvisionedThroughput: {
+    ReadCapacityUnits: 2,
+    WriteCapacityUnits: 2,
+},
+};
+
+dynamodb.createTable(params, function(err, data) {
+    if (err) ppJson(err); // an error occurred
+    else ppJson(data); // successful response
+
+});

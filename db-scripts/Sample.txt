@@ -1,0 +1,33 @@
+var params = {
+TableName: 'Sample',
+KeySchema: [
+    {
+        AttributeName: 'id',
+        KeyType: 'HASH',
+    },
+    {
+        AttributeName: 'donorId',
+        KeyType: 'RANGE'
+    }
+],
+AttributeDefinitions: [
+    {
+        AttributeName: 'id',
+        AttributeType: 'S',
+    },
+    {
+        AttributeName: 'donorId',
+        AttributeType: 'S',
+    }
+],
+ProvisionedThroughput: {
+    ReadCapacityUnits: 2,
+    WriteCapacityUnits: 2,
+},
+};
+
+dynamodb.createTable(params, function(err, data) {
+    if (err) ppJson(err); // an error occurred
+    else ppJson(data); // successful response
+
+});
